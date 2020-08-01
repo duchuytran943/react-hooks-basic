@@ -7,6 +7,7 @@ import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import PostList from "./components/PostList";
 import Pagination from "./components/Pagination";
+import PostFiltersForm from "./components/PostFiltersForm";
 
 function App() {
   const [todoList, setTodoList] = useState(() => {
@@ -29,6 +30,7 @@ function App() {
   const [filters, setFilters] = useState({
     _page: 1,
     _limit: 10,
+    title_like: "",
   });
 
   const paramaterQuery = queryString.stringify(filters);
@@ -78,12 +80,17 @@ function App() {
     setFilters({ ...filters, _page: newPage });
   }
 
+  function handleChangeFilters(newFilters) {
+    setFilters({ ...filters, _page: 1, title_like: newFilters });
+  }
+
   return (
     <div className="app">
       <h1>Huy React Hook</h1>
       {/* <ColorBox></ColorBox> */}
       {/* <TodoForm onSubmitForm={handleSubmit}></TodoForm> */}
       {/* <TodoList todos={todoList} onTodoClick={handleTodoClick}></TodoList> */}
+      <PostFiltersForm onSubmit={handleChangeFilters}></PostFiltersForm>
       <PostList posts={postList}></PostList>
       <Pagination
         pagination={pagination}
